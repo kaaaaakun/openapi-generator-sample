@@ -31,6 +31,21 @@ docker processが起動した後に、ブラウザで下記接続先にアクセ
 docker-compose run openapi-generator generate -i swagger/api.yaml -g {language}
 ```
 
+使用例:
+```sh
+docker-compose run --rm openapi-generator generate -i /swagger/api.yaml -g python -o /app
+```
+上記のコマンドはこのコンテナだけ走る。
+/appを指定しているのはvolumesで繋がっているから。
+これで、yamlを元に使用例が作れるはず。
+```
+  openapi-generator:
+    image: openapitools/openapi-generator-cli
+    volumes:
+      - ./swagger/api.yaml:/swagger/api.yaml
+      - ./api-skeleton/:/app
+```
+
 ## Note
 
 * [apisprout](https://github.com/danielgtaylor/apisprout)
