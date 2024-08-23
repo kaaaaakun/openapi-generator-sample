@@ -1,111 +1,111 @@
-openapi: "3.0.0"
+openapi: "3.0.0"  # OpenAPIのバージョンを指定しています。
 info:
-  version: 1.0.0
-  title: Swagger Petstore
+  version: 1.0.0  # APIのバージョン情報。
+  title: Swagger Petstore  # APIのタイトル。
   license:
-    name: MIT
+    name: MIT  # APIのライセンス情報（MITライセンス）。
 servers:
-  - url: http://petstore.swagger.io/v1
+  - url: http://petstore.swagger.io/v1  # APIのベースURLを指定しています。
 paths:
   /pets:
-    get:
-      summary: List all pets
-      operationId: listPets
+    get:  # ペットのリストを取得する操作。
+      summary: List all pets  # この操作の簡単な説明。
+      operationId: listPets  # 操作の一意の識別子。
       tags:
-        - pets
+        - pets  # 操作に関連するタグ。
       parameters:
         - name: limit
-          in: query
-          description: How many items to return at one time (max 100)
-          required: false
+          in: query  # クエリパラメーターとして渡される。
+          description: How many items to return at one time (max 100)  # 返されるアイテム数の制限。
+          required: false  # このパラメーターは必須ではありません。
           schema:
-            type: integer
-            format: int32
+            type: integer  # パラメーターのデータ型は整数。
+            format: int32  # 整数のフォーマット。
       responses:
         '200':
-          description: A paged array of pets
+          description: A paged array of pets  # 正常なレスポンスの説明（ペットの配列が返される）。
           headers:
             x-next:
-              description: A link to the next page of responses
+              description: A link to the next page of responses  # 次のページへのリンクを示すヘッダー。
               schema:
-                type: string
+                type: string  # ヘッダーのデータ型は文字列。
           content:
-            application/json:
+            application/json:  # レスポンスのコンテンツ形式（JSON形式）。
               schema:
-                $ref: "#/components/schemas/Pets"
+                $ref: "#/components/schemas/Pets"  # Petsスキーマへの参照。
         default:
-          description: unexpected error
+          description: unexpected error  # エラー発生時のデフォルトレスポンスの説明。
           content:
-            application/json:
+            application/json:  # エラーレスポンスのコンテンツ形式（JSON形式）。
               schema:
-                $ref: "#/components/schemas/Error"
-    post:
-      summary: Create a pet
-      operationId: createPets
+                $ref: "#/components/schemas/Error"  # Errorスキーマへの参照。
+    post:  # 新しいペットを作成する操作。
+      summary: Create a pet  # この操作の簡単な説明。
+      operationId: createPets  # 操作の一意の識別子。
       tags:
-        - pets
+        - pets  # 操作に関連するタグ。
       responses:
         '201':
-          description: Null response
+          description: Null response  # ペットが正常に作成された場合のレスポンス（201 Created）。
         default:
-          description: unexpected error
+          description: unexpected error  # エラー発生時のデフォルトレスポンスの説明。
           content:
-            application/json:
+            application/json:  # エラーレスポンスのコンテンツ形式（JSON形式）。
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Error"  # Errorスキーマへの参照。
   /pets/{petId}:
-    get:
-      summary: Info for a specific pet
-      operationId: showPetById
+    get:  # 特定のペットの情報を取得する操作。
+      summary: Info for a specific pet  # この操作の簡単な説明。
+      operationId: showPetById  # 操作の一意の識別子。
       tags:
-        - pets
+        - pets  # 操作に関連するタグ。
       parameters:
         - name: petId
-          in: path
-          required: true
-          description: The id of the pet to retrieve
+          in: path  # パスパラメーターとして渡される。
+          required: true  # このパラメーターは必須。
+          description: The id of the pet to retrieve  # 取得するペットのIDの説明。
           schema:
-            type: string
+            type: string  # パラメーターのデータ型は文字列。
       responses:
         '200':
-          description: Expected response to a valid request
+          description: Expected response to a valid request  # 正常なリクエストに対する期待されるレスポンス。
           content:
-            application/json:
+            application/json:  # レスポンスのコンテンツ形式（JSON形式）。
               schema:
-                $ref: "#/components/schemas/Pet"
+                $ref: "#/components/schemas/Pet"  # Petスキーマへの参照。
         default:
-          description: unexpected error
+          description: unexpected error  # エラー発生時のデフォルトレスポンスの説明。
           content:
-            application/json:
+            application/json:  # エラーレスポンスのコンテンツ形式（JSON形式）。
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Error"  # Errorスキーマへの参照。
 components:
   schemas:
     Pet:
-      type: object
+      type: object  # Petオブジェクトを定義。
       required:
-        - id
-        - name
+        - id  # 必須プロパティとして`id`を指定。
+        - name  # 必須プロパティとして`name`を指定。
       properties:
         id:
-          type: integer
-          format: int64
+          type: integer  # `id`プロパティのデータ型は整数。
+          format: int64  # 整数のフォーマットはint64。
         name:
-          type: string
+          type: string  # `name`プロパティのデータ型は文字列。
         tag:
-          type: string
+          type: string  # `tag`プロパティのデータ型は文字列（オプション）。
     Pets:
-      type: array
+      type: array  # 複数のPetオブジェクトの配列を定義。
       items:
-        $ref: "#/components/schemas/Pet"
+        $ref: "#/components/schemas/Pet"  # Petスキーマへの参照。
     Error:
-      type: object
+      type: object  # エラーレスポンスオブジェクトを定義。
       required:
-        - code
-        - message
+        - code  # 必須プロパティとして`code`を指定。
+        - message  # 必須プロパティとして`message`を指定。
       properties:
         code:
-          type: integer
-          format: int32
+          type: integer  # `code`プロパティのデータ型は整数。
+          format: int32  # 整数のフォーマットはint32。
         message:
-          type: string
+          type: string  # `message`プロパティのデータ型は文字列。
